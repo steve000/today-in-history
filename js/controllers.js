@@ -15,6 +15,7 @@ angular.module('myApp.controllers', [])
             updateTime();
 
             Weather.getWeatherForecast($scope.user.location).then(function (data) {
+                // console.log('99', data)
                 $scope.weather.forecast = data;
             });
 

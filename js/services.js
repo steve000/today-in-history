@@ -2,16 +2,19 @@ angular.module('myApp.services', [])
 
     .provider('Weather', function () {
         var apiKey = "";
+        var currentDate = "";
 
         this.setApiKey = function (key) {
             if (key) {
                 this.apiKey = key;
+                var myDate = new Date();
+                this.currentDate = myDate.getMonth() + '-' + myDate.getDate()
             }
         };
 
         this.getUrl = function (type, ext) {
-            return "http://api.wunderground.com/api/" +
-                this.apiKey + "/" + type + "/q/" + ext + ".json";
+            return "http://api.shujuzhihui.cn/api/todayhistory/getTitle" +
+                "?appKey=" + this.apiKey + "&qdate=" + this.currentDate;
         }
 
         this.$get = function ($q, $http) {
@@ -24,8 +27,8 @@ angular.module('myApp.services', [])
                         url: self.getUrl('forecast', city),
                         cache: true
                     }).success(function (data) {
-                        console.log('11', data)
-                        deferred.resolve(data.forecast.simpleforecast);
+                        // console.log('11', data)
+                        deferred.resolve(data.RESULT);
                     }).error(function (err) {
                         deferred.reject(err)
                     });
